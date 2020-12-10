@@ -12,8 +12,12 @@ The main network architecture is as follows:
 
 ## Installation
 
-This software has only been tested on ubuntu 16.04(x64), python3.5, 
-cuda-9.0, cudnn-7.0 with a GTX-1070 GPU. To use this repo you 
+This software has only been tested on 
+
+- ubuntu 16.04(x64), python3.5, cuda-9.0, cudnn-7.0 with a GTX-1070 GPU. 
+- ubuntu 18.04(arm64)
+
+To use this repo you 
 need to install tensorflow-gpu 1.12.0 and other version of 
 tensorflow has not been tested but I think it will be able to 
 work properly if new version was installed in your local machine. Other required 
@@ -52,8 +56,7 @@ In this repo I uploaded a model trained on cityscapes dataset
 model can be found at ./model/cityscapes/bisenetv2. The pretrained
 model can reach a miou of 72.386 on cityscapes validation dataset.
 This implementation can reach a 83fps on GTX 1070 accelerated by
-tensorrt. The pretrained model can be downloaded 
-[here](https://www.dropbox.com/sh/zqq6mye9yjko9tx/AACidyM0yyHY8XnTJYTxRnqMa?dl=0)
+tensorrt.
 
 You can test a single image on the trained model as follows
 
@@ -63,7 +66,7 @@ python tools/cityscapes/test_bisenetv2_cityscapes.py --weights_path ./model/city
 ```
 <br>
 
-You can test a folder that includes a lot of image as follows
+Also you can test a folder that includes a lot of image as follows
 
 ```
 python3 ./tools/cityscapes/test_bisenetv2_cityscapes.py --weights_path ./model/cityscapes/bisenetv2/cityscapes.ckpt --src_image_path ./data/test_image/KUscapes
