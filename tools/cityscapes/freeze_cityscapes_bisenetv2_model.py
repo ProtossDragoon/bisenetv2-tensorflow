@@ -5,6 +5,22 @@
 # @Site    : https://github.com/MaybeShewill-CV/bisenetv2-tensorflow
 # @File    : freeze_cityscapes_bisenetv2_model.py
 # @IDE: PyCharm
+
+# Refactor : Janghoo Lee, ProtossDragoon
+# IDE : Google COLAB, VSCode
+# Refactor site : https://github.com/ProtossDragoon/bisenetv2-tensorflow
+"""
+Set Environment for Google COLAB, VSCode
+"""
+import os
+p = os.path.dirname(os.path.abspath(__file__))
+print('Current File Path : {}'.format(p))
+hard_coded_project_root_path = os.path.abspath(os.path.join(p, os.pardir, os.pardir))
+print('Project Root Path : {} (Hardcoded)'.format(hard_coded_project_root_path))
+import sys
+if sys.path[0] != hard_coded_project_root_path:
+    sys.path.insert(0, hard_coded_project_root_path)
+
 """
 Freeze bisenetv2 model
 """

@@ -109,7 +109,7 @@ venv.bak/
 .idea/modules.xml
 .idea/semantic-road-estimation.iml
 .idea/workspace.xml
-model/
+#model/*
 .idea/
 config/__init__.py
 data_provider/__init__.py
@@ -119,4 +119,4 @@ tboard/
 tools/__init__.py
 
 tmp*.py
-checkpoint/
+#checkpoint/*

@@ -1,4 +1,5 @@
 # BiseNetv2-Tensorflow
+
 Use tensorflow to implement a real-time scene image segmentation
 model based on paper "BiSeNet V2: Bilateral Network with Guided 
 Aggregation for Real-time Semantic Segmentation". You may refer
@@ -10,6 +11,7 @@ The main network architecture is as follows:
 ![NetWork_Architecture](./data/source_image/network_architecture.png)
 
 ## Installation
+
 This software has only been tested on ubuntu 16.04(x64), python3.5, 
 cuda-9.0, cudnn-7.0 with a GTX-1070 GPU. To use this repo you 
 need to install tensorflow-gpu 1.12.0 and other version of 
@@ -22,6 +24,7 @@ pip3 install -r requirements.txt
 ```
 
 ## CityScapes Dataset preparation
+
 The repo's model was mainly trained on cityscapes dataset. First
 you need to prepare cityscapes dataset well. An example cityscapes
 dataset file hierarchy can be found in ./data/example_dataset
@@ -43,6 +46,7 @@ the file contains a pair of training samples.
 
 
 ## Test model
+
 In this repo I uploaded a model trained on cityscapes dataset 
 [CityScapes](https://www.cityscapes-dataset.com/). The pretrained
 model can be found at ./model/cityscapes/bisenetv2. The pretrained
@@ -56,6 +60,13 @@ You can test a single image on the trained model as follows
 ```
 python tools/cityscapes/test_bisenetv2_cityscapes.py --weights_path ./model/cityscapes/bisenetv2/cityscapes.ckpt 
 --src_image_path ./data/test_image/test_01.png
+```
+<br>
+
+You can test a folder that includes a lot of image as follows
+
+```
+python3 ./tools/cityscapes/test_bisenetv2_cityscapes.py --weights_path ./model/cityscapes/bisenetv2/cityscapes.ckpt --src_image_path ./data/test_image/KUscapes
 ```
 
 The results are as follows:
@@ -112,6 +123,7 @@ python tools/cityscapes/evaluate_bisenetv2_cityscapes.py --help
 ```
 
 ## Train model from scratch
+
 #### Data Preparation
 For speed up the training procedure. Convert the origin training
 images into tensorflow records was highly recommended here which
@@ -187,6 +199,7 @@ The `Miou` increased as follows:
 ![Miou](./data/source_image/miou.png) 
 
 ## Time Profile Model
+
 Here supply some tools to time profile the model's performance.
 First make sure tf2onnx converter was successfully installed in
 your local machine. You may follow the instruction 
@@ -229,6 +242,7 @@ The following result should be generated if nothing goes wrong.
 ![Time_Profile](./data/source_image/time_profile_result.png)
 
 ## Disscussion
+
 1) The origin paper can reach a miou of 73.4 on cityscapes 
 validation dataset which is outperformer than my implementation.
 I suspect the reason may be I did not use the standard synchronized
@@ -263,21 +277,37 @@ python tools/celebamask_hq/test_bisenetv2_celebamaskhq.py
 
 ![celebamask_test_result](./data/source_image/celebamask_hq_test_result.png)
 
+## Freeze model
+
+From tensorflow checkpoint to frozenmodel
+
+```
+python3 ./tools/cityscapes/freeze_cityscapes_bisenetv2_model.py --weights_path ./model/cityscapes/bisenetv2/cityscapes.ckpt --frozen_pb_file_path ./checkpoint/bisenetv2_cityscapes_frozen.pb
+```
+
+<br>
+
+From frozenmodel to TF-TensorRT model
+
+```
+
+```
 
 ## TODO
+
 - [x] Add OHEM module
 - [ ] Search better hyperparameter for cityscapes dataset.
 - [ ] Do experiments on other dataset such as CamVid etc.
 - [x] Organize the code and release bisenetv1 training scripts and pretrained model.
+- [ ] TF-TRT Optimization script
 
 ## Acknowledgement
 
 Finally thanks to the origin author [ycszen](https://github.com/ycszen).
 BiseNet series are excellent work in my opinion. Really appreciate it.
 
-Please cite my repo 
-[bisenetv2-tensorflow](https://github.com/MaybeShewill-CV/bisenetv2-tensorflow) 
-if you use it.
+Original Repo : [bisenetv2-tensorflow](https://github.com/MaybeShewill-CV/bisenetv2-tensorflow)
+Cloned Repo : [bisenetv2-tensorflow](https://github.com/ProtossDragoon/bisenetv2-tensorflow) 
 
 ## Contact
 
