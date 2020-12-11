@@ -233,6 +233,7 @@ bash scripts/convert_tensorflow_model_into_onnx.sh ./checkpoint/bisenetv2_citysc
 - [ ] Ubuntu18.04 (aarch64), Jetson Xavier NX
 - [x] Ubuntu16.04 (x86) 
 
+<br>
 
 A pre-converted onnx model was supplied also if you want your time be saved.
 After all was done mentioned above you may simply run following
@@ -245,6 +246,7 @@ python tools/cityscapes/timeprofile_cityscapes_bisenetv2.py
 - [ ] Ubuntu18.04 (aarch64), Jetson Xavier NX
 - [ ] Ubuntu16.04 (x86) 
 
+<br>
 
 Basically the script do such few things:
 1) Convert the onnx model into tensorrt engine
@@ -264,10 +266,12 @@ The following result should be generated if nothing goes wrong.
 Also support from frozenmodel to TF-TensorRT model
 
 ```
-
+python3 ./tools/cityscapes/experimental_convert_cityscapes_bisenetv2_tensorrt.py
 ```
 - [ ] Ubuntu18.04 (aarch64), Jetson Xavier NX
 - [ ] Ubuntu16.04 (x86) 
+
+<br>
 
 ## Disscussion
 
