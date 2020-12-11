@@ -42,6 +42,7 @@ LABEL_CONTOURS = [(0, 0, 0),  # 0=road
 
 def _load_tensors_from_pb(graph, pb_file, return_elements):
     """
+
     :param graph:
     :param pb_file:
     :param return_elements:
@@ -64,11 +65,10 @@ def _load_graph_from_frozen_pb_file(frozen_pb_file_path):
     :param frozen_pb_file_path:
     :return:
     """
-    # 解析pb文件
     with tf.gfile.GFile(frozen_pb_file_path, "rb") as f:
         graph_def = tf.GraphDef()
         graph_def.ParseFromString(f.read())
-    # 修复一些node attr
+    # 修复一些 node attr
     for node in graph_def.node:
         if node.op == 'RefSwitch':
             node.op = 'Switch'
@@ -79,7 +79,7 @@ def _load_graph_from_frozen_pb_file(frozen_pb_file_path):
             node.op = 'Sub'
             if 'use_locking' in node.attr:
                 del node.attr['use_locking']
-    # 加载计算图定义到默认的计算图
+                
     with tf.Graph().as_default() as graph:
         tf.import_graph_def(
             graph_def,

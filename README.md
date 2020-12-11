@@ -208,13 +208,21 @@ First make sure tf2onnx converter was successfully installed in
 your local machine. You may follow the instruction 
 [here](https://github.com/onnx/tensorflow-onnx) to install it.
 
-I have uploaded a frozen tensorflow pb model in ./checkpoint folder.
-You may run follows to freeze your own trainned models
+### Freeze model
+
+I have uploaded a frozen tensorflow pb model in ./checkpoint folder. You may run follows to freeze your own trainned models
+
+<br>
+
+From tensorflow checkpoint to frozenmodel.
 
 ```
-python tools/cityscapes/freeze_cityscapes_bisenetv2_model.py 
---weights_path ./model/cityscapes/bisenetv2/cityscapes.ckpt
+python3 ./tools/cityscapes/freeze_cityscapes_bisenetv2_model.py --weights_path ./model/cityscapes/bisenetv2/1/cityscapes.ckpt --frozen_pb_file_path ./checkpoint/bisenetv2_cityscapes_frozen.pb
 ```
+- [x] Ubuntu18.04 (aarch64), Jetson Xavier NX
+- [ ] Ubuntu16.04 (x86) 
+
+<br>
 
 Once you have frozen pb model locally you may run following command
 to convert the pb model into onnx model.
@@ -222,6 +230,10 @@ to convert the pb model into onnx model.
 ```
 bash scripts/convert_tensorflow_model_into_onnx.sh ./checkpoint/bisenetv2_cityscapes_frozen.pb ./checkpoint/bisenetv2_cityscapes_frozen.onnx
 ```
+- [ ] Ubuntu18.04 (aarch64), Jetson Xavier NX
+- [x] Ubuntu16.04 (x86) 
+
+
 A pre-converted onnx model was supplied also if you want your time be saved.
 After all was done mentioned above you may simply run following
 command to time profile the model's performance.
@@ -230,6 +242,9 @@ command to time profile the model's performance.
 python tools/cityscapes/timeprofile_cityscapes_bisenetv2.py 
 --input_image_path ./data/test_image/test_01.png
 ```
+- [ ] Ubuntu18.04 (aarch64), Jetson Xavier NX
+- [ ] Ubuntu16.04 (x86) 
+
 
 Basically the script do such few things:
 1) Convert the onnx model into tensorrt engine
@@ -243,6 +258,16 @@ The following result should be generated if nothing goes wrong.
 
 `TimeProfile Result`
 ![Time_Profile](./data/source_image/time_profile_result.png)
+
+<br>
+
+Also support from frozenmodel to TF-TensorRT model
+
+```
+
+```
+- [ ] Ubuntu18.04 (aarch64), Jetson Xavier NX
+- [ ] Ubuntu16.04 (x86) 
 
 ## Disscussion
 
@@ -279,22 +304,6 @@ python tools/celebamask_hq/test_bisenetv2_celebamaskhq.py
 `Celebamask_hq Test Result Image`
 
 ![celebamask_test_result](./data/source_image/celebamask_hq_test_result.png)
-
-## Freeze model
-
-From tensorflow checkpoint to frozenmodel
-
-```
-python3 ./tools/cityscapes/freeze_cityscapes_bisenetv2_model.py --weights_path ./model/cityscapes/bisenetv2/cityscapes.ckpt --frozen_pb_file_path ./checkpoint/bisenetv2_cityscapes_frozen.pb
-```
-
-<br>
-
-From frozenmodel to TF-TensorRT model
-
-```
-
-```
 
 ## TODO
 
