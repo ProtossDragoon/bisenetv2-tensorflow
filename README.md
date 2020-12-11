@@ -1,4 +1,4 @@
-# BiseNetv2-Tensorflow
+# BiseNetv2-Tensorflow for Jetson
 
 Use tensorflow to implement a real-time scene image segmentation
 model based on paper "BiSeNet V2: Bilateral Network with Guided 
