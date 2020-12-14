@@ -8,14 +8,13 @@
 """
 TF-TensorRT Optimization bisenetv2 on cityspaces dataset
 """
+# import essential library
 import argparse
-
 import tensorflow as tf
 assert tf.__version__.startswith('1')
 print(tf.__version__)
 import cv2
 import numpy as np
-
 from tensorflow.python.compiler.tensorrt import trt_convert as trt
 
 
@@ -23,7 +22,7 @@ def init_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('-i', '--demo_image_path', type=str, help='The input image for demo',
                         default='data/test_image/KUscapes/10.59.46.png')
-    parser.add_argument('-f', '--frozen_graph_path', type=str, help='The model frozen graph file path'
+    parser.add_argument('-f', '--frozen_graph_path', type=str, help='The model frozen graph file path',
                         default='checkpoint/bisenetv2_cityscapes_frozen.pb')
 
     return parser.parse_args()
@@ -55,13 +54,12 @@ def preprocess_image(src_image, input_tensor_size):
     return output_image
 
 
-
 def print_default_graph_nodes_name():
     with tf.get_default_graph().as_default() as graph:
         # graph node 의 이름을 조회하기 위해서는 graphdef 자료형이 준비되어 있어야 함.
-        for node in graphdef.as_graph_def().node:
+        for node in graph.as_graph_def().node:
             print(node.name)
-    print('\n\ntotal {} nodes were detected'.format(len(graph.as_graph_def().node)))
+        print('\n\ntotal {} nodes were detected'.format(len(graph.as_graph_def().node)))
             
 
 def get_trt_graph_def(frozen_graph_path):
@@ -79,7 +77,7 @@ def get_trt_graph_def(frozen_graph_path):
     with tf.Session(config=tf.ConfigProto(log_device_placement=True)) as sess:
 
         # First deserialize your frozen graph:
-        with tf.gfile.GFile(FROZEN_GRAPH_PATH, 'rb') as f:
+        with tf.gfile.GFile(frozen_graph_path, 'rb') as f:
             frozen_graph = tf.GraphDef()
             frozen_graph.ParseFromString(f.read())
 
@@ -133,21 +131,21 @@ def trt_inference_demo(trt_graph_def, demo_image_path, environment_colab=True):
         outputs = ['final_output:0', 'BiseNetV2/prob:0']
 
         # Import the TensorRT graph into a new graph and run:
-        output_node = tf.import_graph_def(
-            trt_graph,
+        output_nodes = tf.import_graph_def(
+            trt_graph_def,
             # input_map=input_map,
             return_elements=outputs,
             name="tftrt"
         )
             
         # print('input tensor :', input_tensor)
-        print('output node :', output_node)
+        print('output node :', output_nodes)
 
         # node list print
         print_default_graph_nodes_name()
 
         # run inference
-        result = sess.run(output_node, feed_dict={'tftrt/input_tensor:0':[preprocessed_image]})
+        result = sess.run(output_nodes, feed_dict={'tftrt/input_tensor:0':[preprocessed_image]})
         for i in range(len(result)):
             print('result {} - tensor name <{}> shape : {}'.format(i, outputs[i], result[i].shape))
 
@@ -176,7 +174,7 @@ def trt_inference_demo(trt_graph_def, demo_image_path, environment_colab=True):
         cv2.imshow('result [0]', result[0])
         cv2.imshow('result [1] [RGB] road/sidewalk/building', cv2.cvtColor(result[1][0,:,:,0:3], cv2.COLOR_BGR2RGB))
         cv2.imshow('result [1] [RGB] person/rider/car', cv2.cvtColor(result[1][0,:,:,11:14], cv2.COLOR_BGR2RGB))
-        cv2.waitKey(0) & 0xff == ord('q'):
+        cv2.waitKey(0) & 0xff == ord('q')
         # ---
     
     return result

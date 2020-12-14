@@ -12,6 +12,7 @@
 """
 Set Environment for Google COLAB, VSCode
 """
+# import essential library
 import os
 p = os.path.dirname(os.path.abspath(__file__))
 print('Current File Path : {}'.format(p))
@@ -24,8 +25,8 @@ if sys.path[0] != hard_coded_project_root_path:
 """
 Test bisenetv2 on cityspaces dataset
 """
+# import essential library
 import argparse
-
 import cv2
 import time
 import numpy as np
@@ -33,6 +34,7 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 from sklearn.metrics import confusion_matrix
 
+# import bisenetv2-tensorflow module
 from bisenet_model import bisenet_v2
 from local_utils.config_utils import parse_config_utils
 
@@ -202,8 +204,8 @@ def test_bisenet_cityspaces(image_path, image_path_isdir, weights_path):
                 t_loop_end = time.time()
                 t_cumm_cost += (t_loop_end - t_loop_start)
                 
-                data_src_dirname=image_path.split('/')[-1]
-                save_dir=os.path.join(hard_coded_project_root_path, 'data', 'test_image', data_src_dir, 'output.'+imname)
+                data_src_dirname = image_path.split('/')[-1]
+                save_dir = os.path.join(hard_coded_project_root_path, 'data', 'test_image', data_src_dirname, 'output.'+imname)
                 cv2.imwrite(save_dir, prediction_mask_color)
                 print('save as : {}\n'.format(save_dir))
 
@@ -247,8 +249,8 @@ def test_bisenet_cityspaces(image_path, image_path_isdir, weights_path):
             plt.imshow(prediction_mask_color[:, :, (2, 1, 0)])
             plt.show()
 
-            data_src_dirname=image_path.split('/')[-2]
-            save_dir=os.path.join(hard_coded_project_root_path, 'data', 'test_image', data_src_dir, 'output.'+imname)
+            data_src_dirname = image_path.split('/')[-2]
+            save_dir=os.path.join(hard_coded_project_root_path, 'data', 'test_image', data_src_dirname, 'output.'+imname)
 
             cv2.imwrite(save_dir, prediction_mask_color)
             print('save as : {}'.format(save_dir))
@@ -293,3 +295,4 @@ if __name__ == '__main__':
         image_path_isdir=os.path.isdir(image_path),
         # weights_path=args.weights_path
         weights_path=weights_path
+    )
