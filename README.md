@@ -8,6 +8,7 @@ https://arxiv.org/abs/2004.02147 for details.
 The main network architecture is as follows:
 
 `Network Architecture`
+
 ![NetWork_Architecture](./data/source_image/network_architecture.png)
 
 ## Installation
