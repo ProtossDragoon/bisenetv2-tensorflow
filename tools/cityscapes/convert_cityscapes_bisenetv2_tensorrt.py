@@ -158,13 +158,17 @@ def trt_inference_demo(trt_graph_def, demo_image_path, environment_colab=True):
         result[0] = np.array(result[0], dtype=np.float32)
         result[1] = np.array(result[1], dtype=np.float32)
         plt.subplot(4,1,1)
-        plt.imshow('original', preprocess_image)
+        plt.imshow(preprocess_image)
+        plt.title('original')
         plt.subplot(4,2,1)
-        plt.imshow('result [0]', result[0])
+        plt.imshow(result[0])
+        plt.title('result [0]')
         plt.subplot(4,3,1)        
-        plt.imshow('result [1] [RGB] road/sidewalk/building', result[1][0,:,:,0:3])
+        plt.imshow(result[1][0,:,:,0:3])
+        plt.title('result [1] [RGB] road/sidewalk/building')
         plt.subplot(4,4,1)
-        plt.imshow('result [1] [RGB] person/rider/car', result[1][0,:,:,11:14])        
+        plt.imshow(result[1][0,:,:,11:14])
+        plt.title('result [1] [RGB] person/rider/car')
         # ---
 
     else:
