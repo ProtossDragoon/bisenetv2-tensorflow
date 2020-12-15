@@ -52,29 +52,21 @@ def init_args():
 def callback(data):
     global output_names
     global output_nodes
+    global pub
     cv2_img = bridge.imgmsg_to_cv2(data, desired_encoding = 'passthrough')
     preprocessed_image = preprocess_image(cv2_img)
     result = sess.run(output_nodes, feed_dict={'tftrt/input_tensor:0':[preprocessed_image]})
     for i in range(len(result)):
         print('result {} - tensor name <{}> shape : {}'.format(i, outputs[i], result[i].shape))
     
-
     # ---------- 고쳐야함
-    pub = rospy.Publisher('image_chatter_pub', Image, queue_size=10)
-    rospy.init_node('segmentation_node', anonymous=True)
-        # NOTE: the name must be a base name, i.e. it cannot contain any slashes "/".
-        # anonymous = True ensures that your node has a unique name by adding random numbers to the end of NAME.
     rate = rospy.Rate(10) # 10hz
     bridge = CvBridge()
 
-    while not rospy.is_shutdown():
-        ret, frame = cap.read()
-        print(type(frame))
-        cv2.imshow('publisher', frame)
-        ku_img_msg = bridge.cv2_to_imgmsg(frame, encoding = 'passthrough')
-        # rospy.loginfo(ku_img_msg) # which performs triple-duty: the messages get printed to screen, it gets written to the Node's log file, and it gets written to rosout. rosout is a handy tool for debugging
-        pub.publish(ku_img_msg)
-        rate.sleep()    
+    print(type(result))
+    ch = 0
+    ku_img_msg = bridge.cv2_to_imgmsg(result[1,:,:,ch:ch+3], encoding = 'passthrough')
+    pub.publish(ku_img_msg)
     # ------------
 
 
@@ -84,6 +76,7 @@ def run_segmentation(trt_graph_def, tracking_output_node_list=['final_output:0']
     # Import the TensorRT graph into a new graph and run:
     global output_names
     global output_nodes
+    global pub
     output_names = tracking_output_node_list
     output_nodes = tf.import_graph_def(
         trt_graph_def,
@@ -91,12 +84,12 @@ def run_segmentation(trt_graph_def, tracking_output_node_list=['final_output:0']
         return_elements=tracking_output_node_list,
         name="tftrt"
     )
-
-    rospy.init_node('image_listener_node', anonymous=True)
+    rospy.init_node('segmentation', anonymous=True)
+        # NOTE: the name must be a base name, i.e. it cannot contain any slashes "/".
+        # anonymous = True ensures that your node has a unique name by adding random numbers to the end of NAME.
+    pub = rospy.Publisher('segmentation_chatter_pub', Image, queue_size=10)
     rospy.Subscriber('/camera/color/image_raw', Image, callback)
     rospy.spin()
-
-
     
 
 if __name__ == '__main__':
