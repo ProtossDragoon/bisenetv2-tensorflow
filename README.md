@@ -220,8 +220,9 @@ From tensorflow checkpoint to frozenmodel.
 ```
 python3 ./tools/cityscapes/freeze_cityscapes_bisenetv2_model.py --weights_path ./model/cityscapes/bisenetv2/1/cityscapes.ckpt --frozen_pb_file_path ./checkpoint/bisenetv2_cityscapes_frozen.pb
 ```
-- [x] Ubuntu18.04 (aarch64), Jetson Xavier NX
+- [ ] Ubuntu18.04 (aarch64), Jetson Xavier NX : Out of Memory, not work
 - [ ] Ubuntu16.04 (x86) 
+- [x] Google COLAB 
 
 <br>
 
@@ -245,7 +246,7 @@ python tools/cityscapes/timeprofile_cityscapes_bisenetv2.py
 --input_image_path ./data/test_image/test_01.png
 ```
 - [ ] Ubuntu18.04 (aarch64), Jetson Xavier NX
-- [ ] Ubuntu16.04 (x86) 
+- [ ] Ubuntu16.04 (x86)
 
 <br>
 
