@@ -37,8 +37,8 @@ from sensor_msgs.msg import Image
 import rospy
 
 # import bisenetv2-tensorflow module
-from tools.cityspaces.convert_cityscapes_bisenetv2_tensorrt import preprocess_image, print_default_graph_nodes_name
-from tools.cityspaces.convert_cityscapes_bisenetv2_tensorrt import get_trt_graph_def
+from tools.cityscapes.convert_cityscapes_bisenetv2_tensorrt import preprocess_image, print_default_graph_nodes_name
+from tools.cityscapes.convert_cityscapes_bisenetv2_tensorrt import get_trt_graph_def
 
 
 def init_args():
