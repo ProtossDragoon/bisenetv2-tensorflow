@@ -158,7 +158,7 @@ def trt_inference_demo(trt_graph_def, demo_image_path, environment_colab=True):
         result[0] = np.array(result[0], dtype=np.float32)
         result[1] = np.array(result[1], dtype=np.float32)
         plt.subplot(4,1,1)
-        plt.imshow(preprocess_image)
+        plt.imshow(np.array(src_imge, dtype=np.float32))
         plt.title('original')
         plt.subplot(4,2,1)
         plt.imshow(result[0])
