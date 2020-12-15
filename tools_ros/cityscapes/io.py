@@ -71,37 +71,44 @@ def callback(data):
 
 
 def run_segmentation(trt_graph_def, tracking_output_node_list=['final_output:0']):
-    tf.reset_default_graph()
     
     # Import the TensorRT graph into a new graph and run:
     global output_names
     global output_nodes
     global pub
-    output_names = tracking_output_node_list
-    output_nodes = tf.import_graph_def(
-        trt_graph_def,
-        # input_map=input_map,
-        return_elements=tracking_output_node_list,
-        name="tftrt"
-    )
+
+    tf.reset_default_graph()
+    with tf.Session(config=tf.ConfigProto(log_device_placement=True)) as sess:
+        output_names = tracking_output_node_list
+        output_nodes = tf.import_graph_def(
+            trt_graph_def,
+            # input_map=input_map,
+            return_elements=tracking_output_node_list,
+            name="tftrt"
+        )
+
     rospy.init_node('segmentation', anonymous=True)
         # NOTE: the name must be a base name, i.e. it cannot contain any slashes "/".
         # anonymous = True ensures that your node has a unique name by adding random numbers to the end of NAME.
     pub = rospy.Publisher('segmentation_chatter_pub', Image, queue_size=10)
-    rospy.Subscriber('/camera/color/image_raw', Image, callback)
-    rospy.spin()
-    
+    with tf.Session(config=tf.ConfigProto(log_device_placement=True)) as sess:
+        rospy.Subscriber('/camera/color/image_raw', Image, callback)
+        rospy.spin()
 
-if __name__ == '__main__':
-    args = init_args()
+
+def main(args):
     try:
-        with tf.Session(config=tf.ConfigProto(log_device_placement=True)) as sess:
-            trt_graph_def = get_trt_graph_def(args.frozen_graph_path)
-            print_default_graph_nodes_name()
-            tracking_output_node_list = ['final_output:0', 'BiseNetV2/prob:0']
-            run_segmentation(trt_graph_def, tracking_output_node_list=tracking_output_node_list)
+        trt_graph_def = get_trt_graph_def(args.frozen_graph_path)
+        print_default_graph_nodes_name()
+        tracking_output_node_list = ['final_output:0', 'BiseNetV2/prob:0']        
+        run_segmentation(trt_graph_def, tracking_output_node_list=tracking_output_node_list)
 
     except rospy.ROSInterruptException:
         # this catches a rospy.ROSInterruptException exception
         # 해석하면.. 정상적 종료에 대해서 오류메시지 출력하고 그러지 않겠다는 뜻.
         pass
+
+
+if __name__ == '__main__':
+    args = init_args()
+    main(args)
