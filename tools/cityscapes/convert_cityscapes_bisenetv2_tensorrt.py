@@ -24,6 +24,7 @@ def init_args():
                         default='data/test_image/KUscapes/10.59.46.png')
     parser.add_argument('-f', '--frozen_graph_path', type=str, help='The model frozen graph file path',
                         default='checkpoint/bisenetv2_cityscapes_frozen.pb')
+    parser.add_argument('-c', '--is_env_colab', action="store_true", help='Set if your env is Google COLAB')
 
     return parser.parse_args()
     
@@ -187,4 +188,4 @@ if __name__ == '__main__':
     args = init_args()
 
     trt_graph_def = get_trt_graph_def(args.frozen_graph_path)
-    result = trt_inference_demo(trt_graph_def, args.demo_image_path, environment_colab=True)
+    result = trt_inference_demo(trt_graph_def, args.demo_image_path, environment_colab=args.is_env_colab)

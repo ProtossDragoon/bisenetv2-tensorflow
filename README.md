@@ -267,10 +267,19 @@ The following result should be generated if nothing goes wrong.
 Also support from frozenmodel to TF-TensorRT model
 
 ```
-python3 ./tools/cityscapes/experimental_convert_cityscapes_bisenetv2_tensorrt.py
+python3 ./tools/cityscapes/convert_cityscapes_bisenetv2_tensorrt.py
 ```
-- [ ] Ubuntu18.04 (aarch64), Jetson Xavier NX
+- [x] Ubuntu18.04 (aarch64), Jetson Xavier NX
 - [ ] Ubuntu16.04 (x86) 
+
+<br>
+
+If your environment is Google COLAB
+
+```
+python3 ./tools/cityscapes/convert_cityscapes_bisenetv2_tensorrt.py -c
+```
+- [x] Google COLAB
 
 <br>
 
