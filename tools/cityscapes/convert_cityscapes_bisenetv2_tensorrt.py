@@ -21,9 +21,9 @@ from tensorflow.python.compiler.tensorrt import trt_convert as trt
 def init_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('-i', '--demo_image_path', type=str, help='The input image for demo',
-                        default='data/test_image/KUscapes/10.59.46.png')
+                        default='./data/test_image/KUscapes/10.59.46.png')
     parser.add_argument('-f', '--frozen_graph_path', type=str, help='The model frozen graph file path',
-                        default='checkpoint/bisenetv2_cityscapes_frozen.pb')
+                        default='./checkpoint/bisenetv2_cityscapes_frozen.pb')
     parser.add_argument('-c', '--is_env_colab', action="store_true", help='Set if your env is Google COLAB')
 
     return parser.parse_args()
@@ -171,7 +171,7 @@ def trt_inference_demo(trt_graph_def, demo_image_path, environment_colab=True):
         # hard coded area
         result[0] = np.array(result[0], dtype=np.float32)
         result[1] = np.array(result[1], dtype=np.float32)
-        cv2.imshow('original', cv2.cvtColor(preprocessed_image, cv2.COLOR_BGR2RGB))
+        cv2.imshow('original', src_imge)
         cv2.imshow('result [0]', result[0])
         cv2.imshow('result [1] [RGB] road/sidewalk/building', cv2.cvtColor(result[1][0,:,:,0:3], cv2.COLOR_BGR2RGB))
         cv2.imshow('result [1] [RGB] person/rider/car', cv2.cvtColor(result[1][0,:,:,11:14], cv2.COLOR_BGR2RGB))

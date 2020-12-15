@@ -210,7 +210,6 @@ your local machine. You may follow the instruction
 [here](https://github.com/onnx/tensorflow-onnx) to install it.
 
 ### Freeze model
-
 I have uploaded a frozen tensorflow pb model in ./checkpoint folder. You may run follows to freeze your own trainned models
 
 <br>
@@ -223,6 +222,23 @@ python3 ./tools/cityscapes/freeze_cityscapes_bisenetv2_model.py --weights_path .
 - [ ] Ubuntu18.04 (aarch64), Jetson Xavier NX : Out of Memory, not work
 - [ ] Ubuntu16.04 (x86) 
 - [x] Google COLAB 
+
+<br>
+
+note : If you run the code on COLAB, you should run code below on the cell before when you run the python .py scripts.
+
+```
+try:
+  # This %tensorflow_version magic only works in Colab.
+  %tensorflow_version 1.x
+except Exception:
+  pass
+
+# For your non-Colab code, be sure you have tensorflow==1.15
+import tensorflow as tf
+assert tf.__version__.startswith('1')
+print(tf.__version__)
+```
 
 <br>
 
