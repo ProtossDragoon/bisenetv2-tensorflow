@@ -60,11 +60,7 @@ def callback(data):
     result = runtime_session.run(output_nodes, feed_dict={'tftrt/input_tensor:0':[preprocessed_image]})
     for i in range(len(result)):
         print('result {} - tensor name <{}> shape : {}'.format(i, tracking_output_node_list[i], result[i].shape))
-    
-    rate = rospy.Rate(10) # 10hz
-    
-
-    print(type(result))
+     
     ch = 0
     ku_img_msg = bridge.cv2_to_imgmsg(result[1,:,:,ch:ch+3], encoding = 'passthrough')
     pub.publish(ku_img_msg)
@@ -112,7 +108,7 @@ def main(args):
         run_segmentation(trt_graph_def)
 
     except rospy.ROSInterruptException:
-        if not sess._closed:
+        if not runtime_session._closed:
             runtime_session.close()
         # this catches a rospy.ROSInterruptException exception
         # 해석하면.. 정상적 종료에 대해서 오류메시지 출력하고 그러지 않겠다는 뜻.
