@@ -336,6 +336,21 @@ python tools/celebamask_hq/test_bisenetv2_celebamaskhq.py
 
 ![celebamask_test_result](./data/source_image/celebamask_hq_test_result.png)
 
+## Others
+
+### tools_ros
+Tools for ROS. Here are example output
+
+<br>
+
+![jetson ex 1](./data/source_image/jetson_ex_1.jpg)
+
+<br>
+
+![jetson ex 2](./data/source_image/jetson_ex_2.jpg)
+
+<br>
+
 ## TODO
 
 - [x] Add OHEM module
