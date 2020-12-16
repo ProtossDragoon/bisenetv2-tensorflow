@@ -343,11 +343,11 @@ Tools for ROS. Here are example output
 
 <br>
 
-![jetson ex 1](./data/source_image/jetson_ex_1.jpg)
+![jetson ex 1](./data/source_image/jetson_ex_1.png)
 
 <br>
 
-![jetson ex 2](./data/source_image/jetson_ex_2.jpg)
+![jetson ex 2](./data/source_image/jetson_ex_2.png)
 
 <br>
 
