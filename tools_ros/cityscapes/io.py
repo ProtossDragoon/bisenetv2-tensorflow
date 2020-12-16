@@ -56,13 +56,15 @@ def callback(data):
     global runtime_session
     global tracking_output_node_list 
     cv2_img = bridge.imgmsg_to_cv2(data, desired_encoding = 'passthrough')
+    print('recieved image topic : {}'.format(cv2_img.dtype))
     preprocessed_image = preprocess_image(cv2_img, [1024, 512]) # FIXME : hardcoded size
     result = runtime_session.run(output_nodes, feed_dict={'tftrt/input_tensor:0':[preprocessed_image]})
     for i in range(len(result)):
-        print('result {} - tensor name <{}> shape : {}'.format(i, tracking_output_node_list[i], result[i].shape))
+        print('result {} - tensor name <{}> shape : {}({})'.format(i, tracking_output_node_list[i], result[i].shape, result[i].dtype))
      
     ch = 0
-    ku_img_msg = bridge.cv2_to_imgmsg(result[1,:,:,ch:ch+3], encoding = 'passthrough')
+    ku_img_msg = bridge.cv2_to_imgmsg(result[1][0,:,:,ch:ch+3], encoding = 'bgr8')
+    print('pubslished image topic : {}'.format(result[1][0,:,:,ch:ch+3].shape))
     pub.publish(ku_img_msg)
 
 
@@ -110,6 +112,7 @@ def main(args):
     except rospy.ROSInterruptException:
         if not runtime_session._closed:
             runtime_session.close()
+            print('Session closed successfully.')
         # this catches a rospy.ROSInterruptException exception
         # 해석하면.. 정상적 종료에 대해서 오류메시지 출력하고 그러지 않겠다는 뜻.
         pass

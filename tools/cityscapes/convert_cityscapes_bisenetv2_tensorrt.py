@@ -29,7 +29,7 @@ def init_args():
     return parser.parse_args()
     
 
-def preprocess_image(src_image, input_tensor_size):
+def preprocess_image(src_image, input_tensor_size, print_shape=False):
     """bisenet 의 input 에 공통적으로 적용되는 전처리입니다.
 
     Args:
@@ -50,7 +50,8 @@ def preprocess_image(src_image, input_tensor_size):
     img_std = np.array([0.5, 0.5, 0.5]).reshape((1, 1, len([0.5, 0.5, 0.5])))
     output_image -= img_mean
     output_image /= img_std
-    print('shape :', output_image.shape)
+    if print_shape:
+        print('shape :', output_image.shape)
 
     return output_image
 
