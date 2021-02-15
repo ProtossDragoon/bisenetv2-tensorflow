@@ -137,14 +137,14 @@ class _CelebamaskhqTfWriter(object):
                 # prepare gt image
                 gt_image_raw = tf.gfile.FastGFile(gt_src_image_path, 'rb').read()
 
-                # prepare gt binary image
-                gt_binary_image_raw = tf.gfile.FastGFile(gt_label_image_path, 'rb').read()
+                # prepare gt label image
+                gt_label_image_raw = tf.gfile.FastGFile(gt_label_image_path, 'rb').read()
 
                 example = tf.train.Example(
                     features=tf.train.Features(
                         feature={
                             'gt_src_image_raw': _bytes_list_feature(gt_image_raw),
-                            'gt_label_image_raw': _bytes_list_feature(gt_binary_image_raw),
+                            'gt_label_image_raw': _bytes_list_feature(gt_label_image_raw),
                         }))
                 writer.write(example.SerializeToString())
 
