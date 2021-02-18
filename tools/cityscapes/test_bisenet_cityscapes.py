@@ -209,8 +209,8 @@ def test_bisenet_cityspaces(image_path, weights_path):
 
     # define session and gpu config
     sess_config = tf.ConfigProto(allow_soft_placement=True)
-    sess_config.gpu_options.per_process_gpu_memory_fraction = CFG.GPU.GPU_MEMORY_FRACTION
-    sess_config.gpu_options.allow_growth = CFG.GPU.TF_ALLOW_GROWTH
+    sess_config.gpu_options.per_process_gpu_memory_fraction = CFG.GPU.GPU_MEMORY_FRACTION_INFERENCE
+    sess_config.gpu_options.allow_growth = CFG.GPU.TF_ALLOW_GROWTH_INFERENCE
     sess_config.gpu_options.allocator_type = 'BFC'
     sess = tf.Session(config=sess_config)
 
