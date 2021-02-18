@@ -68,6 +68,7 @@ TRAIN:
         ENABLE: True
         GPU_DEVICES: ['0', '1', '2', '3']
         CHIEF_DEVICE_INDEX: 0
+    JUPYTR_NOTEBOOK: False
 SOLVER:
     LR: 0.05
     LR_POLICY: 'poly'
@@ -83,6 +84,7 @@ SOLVER:
         MIN_SAMPLE_NUMS: 262144
 GPU:
     GPU_MEMORY_FRACTION: 0.9
+    GPU_MEMORY_FRACTION_INFERENCE: 0.3
     TF_ALLOW_GROWTH: True
 LOG:
     SAVE_DIR: './log'

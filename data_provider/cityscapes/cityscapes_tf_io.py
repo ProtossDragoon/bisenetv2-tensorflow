@@ -17,6 +17,11 @@ import tensorflow as tf
 import numpy as np
 import loguru
 
+if CFG.TRAIN.JUPYTER_NOTEBOOK:
+    from tqdm import tqdm_notebook as tqdm
+else:
+    from tqdm import tqdm
+
 from local_utils.config_utils import parse_config_utils
 from local_utils.augment_utils.cityscapes import augmentation_tf_utils as aug
 
@@ -129,24 +134,26 @@ class _CityScapesTfWriter(object):
 
         LOG.info('Writing {:s}....'.format(tfrecords_path))
 
-        with tf.python_io.TFRecordWriter(tfrecords_path) as writer:
-            for sample_path in sample_image_paths:
-                gt_src_image_path = sample_path[0]
-                gt_label_image_path = sample_path[1]
+        with tqdm(total=len(sample_image_paths)) as pbar:
+            with tf.python_io.TFRecordWriter(tfrecords_path) as writer:
+                for sample_path in sample_image_paths:
+                    gt_src_image_path = sample_path[0]
+                    gt_label_image_path = sample_path[1]
 
-                # prepare gt image
-                gt_image_raw = tf.gfile.FastGFile(gt_src_image_path, 'rb').read()
+                    # prepare gt image
+                    gt_image_raw = tf.gfile.FastGFile(gt_src_image_path, 'rb').read()
 
-                # prepare gt label image
-                gt_label_image_raw = tf.gfile.FastGFile(gt_label_image_path, 'rb').read()
+                    # prepare gt label image
+                    gt_label_image_raw = tf.gfile.FastGFile(gt_label_image_path, 'rb').read()
 
-                example = tf.train.Example(
-                    features=tf.train.Features(
-                        feature={
-                            'gt_src_image_raw': _bytes_list_feature(gt_image_raw),
-                            'gt_label_image_raw': _bytes_list_feature(gt_label_image_raw),
-                        }))
-                writer.write(example.SerializeToString())
+                    example = tf.train.Example(
+                        features=tf.train.Features(
+                            feature={
+                                'gt_src_image_raw': _bytes_list_feature(gt_image_raw),
+                                'gt_label_image_raw': _bytes_list_feature(gt_label_image_raw),
+                            }))
+                    writer.write(example.SerializeToString())
+                    pbar.update(1)
 
         LOG.info('Writing {:s} complete'.format(tfrecords_path))
 
