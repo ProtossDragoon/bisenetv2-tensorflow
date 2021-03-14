@@ -47,7 +47,7 @@ def _load_tensors_from_frozen_pb(graph, frozen_pb_file_path, return_elements):
     with graph.as_default():
         return_elements = tf.import_graph_def(
             frozen_graph_def,
-            return_elements=return_elements
+            return_elements=return_elements,
         )
     return return_elements
 
@@ -60,10 +60,10 @@ def _load_graph_from_frozen_pb_file(frozen_pb_file_path):
     """
     # 解析pb文件
     with tf.gfile.GFile(frozen_pb_file_path, "rb") as f:
-        graph_def = tf.GraphDef()
-        graph_def.ParseFromString(f.read())
+        frozen_graph_def = tf.GraphDef()
+        frozen_graph_def.ParseFromString(f.read())
     # 修复一些node attr
-    for node in graph_def.node:
+    for node in frozen_graph_def.node:
         if node.op == 'RefSwitch':
             node.op = 'Switch'
             for index in range(len(node.input)):
@@ -76,12 +76,8 @@ def _load_graph_from_frozen_pb_file(frozen_pb_file_path):
     # 加载计算图定义到默认的计算图
     with tf.Graph().as_default() as graph:
         tf.import_graph_def(
-            graph_def,
-            input_map=None,
+            frozen_graph_def,
             return_elements=None,
-            name="prefix",
-            op_dict=None,
-            producer_op_list=None
         )
     return graph
 
