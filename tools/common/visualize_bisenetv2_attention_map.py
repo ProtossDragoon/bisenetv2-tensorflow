@@ -34,14 +34,14 @@ def init_args():
     return parser.parse_args()
 
 
-def _load_tensors_from_pb(graph, pb_file, return_elements):
+def _load_tensors_from_frozen_pb(graph, frozen_pb_file_path, return_elements):
     """
     :param graph:
-    :param pb_file:
+    :param frozen_pb_file_path:
     :param return_elements:
     :return:
     """
-    with tf.gfile.FastGFile(pb_file, 'rb') as f:
+    with tf.gfile.FastGFile(frozen_pb_file_path, 'rb') as f:
         frozen_graph_def = tf.GraphDef()
         frozen_graph_def.ParseFromString(f.read())
     with graph.as_default():
