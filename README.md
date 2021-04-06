@@ -219,7 +219,7 @@ From tensorflow checkpoint to frozenmodel.
 ```
 python3 ./tools/cityscapes/freeze_cityscapes_bisenetv2_model.py --weights_path ./model/cityscapes/bisenetv2/1/cityscapes.ckpt --frozen_pb_file_path ./checkpoint/bisenetv2_cityscapes_frozen.pb
 ```
-- [ ] Ubuntu18.04 (aarch64), Jetson Xavier NX : Out of Memory, not work
+- [x] Ubuntu18.04 (aarch64), Jetson Xavier NX, Jetson AGX Xavier 
 - [ ] Ubuntu16.04 (x86) 
 - [x] Google COLAB 
 
@@ -248,7 +248,7 @@ to convert the pb model into onnx model.
 ```
 bash scripts/convert_tensorflow_model_into_onnx.sh ./checkpoint/bisenetv2_cityscapes_frozen.pb ./checkpoint/bisenetv2_cityscapes_frozen.onnx
 ```
-- [ ] Ubuntu18.04 (aarch64), Jetson Xavier NX
+- [x] Ubuntu18.04 (aarch64), Jetson Xavier NX, Jetson AGX Xavier
 - [x] Ubuntu16.04 (x86) 
 
 <br>
@@ -261,7 +261,7 @@ command to time profile the model's performance.
 python tools/cityscapes/timeprofile_cityscapes_bisenetv2.py 
 --input_image_path ./data/test_image/test_01.png
 ```
-- [ ] Ubuntu18.04 (aarch64), Jetson Xavier NX
+- [x] Ubuntu18.04 (aarch64), Jetson Xavier NX, Jetson AGX Xavier
 - [ ] Ubuntu16.04 (x86)
 
 <br>
@@ -286,7 +286,7 @@ Also support from frozenmodel to TF-TensorRT model
 ```
 python3 ./tools/cityscapes/convert_cityscapes_bisenetv2_tensorrt.py
 ```
-- [x] Ubuntu18.04 (aarch64), Jetson Xavier NX
+- [x] Ubuntu18.04 (aarch64), Jetson Xavier NX, Jetson AGX Xavier
 - [ ] Ubuntu16.04 (x86) 
 
 <br>
@@ -358,6 +358,7 @@ Tools for ROS. Here are example output
 - [ ] Do experiments on other dataset such as CamVid etc.
 - [x] Organize the code and release bisenetv1 training scripts and pretrained model.
 - [ ] TF-TRT Optimization script
+- [ ] FIXME : https://www.notion.so/simple-data-augmentation-033afbae2f964ca19eef8f8b0944a137
 
 ## Acknowledgement
 
