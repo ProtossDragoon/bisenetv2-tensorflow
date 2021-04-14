@@ -358,7 +358,9 @@ Tools for ROS. Here are example output
 - [ ] Do experiments on other dataset such as CamVid etc.
 - [x] Organize the code and release bisenetv1 training scripts and pretrained model.
 - [ ] TF-TRT Optimization script
-- [ ] FIXME : https://www.notion.so/simple-data-augmentation-033afbae2f964ca19eef8f8b0944a137
+- [ ] FIXME : Augmentation : https://www.notion.so/simple-data-augmentation-033afbae2f964ca19eef8f8b0944a137
+- [ ] ADD : Other metric - Accuracy, Precision, Recall
+- [ ] ADD : Validation Set
 
 ## Acknowledgement
 
